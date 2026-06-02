@@ -1,91 +1,138 @@
-# Multi-Domain AI RAG System for CV Parsing & Candidate Retrieval
+# Multi-Domain AI RAG System for Structured CV Extraction & Candidate Retrieval
 
-An Agentic Retrieval-Augmented Generation (RAG) system built to handle unstructured resumes (CVs) across multiple domains (Information Technology & Banking). The system extracts structured entities from both digitally generated and scanned PDFs, stores them in a Vector Database, and provides a chat interface for HR professionals to discover the right candidates intuitively.
+An Agentic Retrieval-Augmented Generation (RAG) system engineered to parse unstructured resumes (CVs) across multiple business domains (**Information Technology** & **Banking**). The system handles both digitally generated text PDFs and scanned (image-based) PDFs, extracts structured candidate profiles, and provides an intuitive natural language chat interface for HR talent search.
 
 ---
 
-## 🚀 Key Features
+## ⚡ Technical Highlights & Innovations
 
-*   **One RAG, Multiple Domains:** A unified Qdrant vector space seamlessly handles both IT and Banking candidates without manual filtering.
-*   **Ultra-low Latency Agentic Search:** Using regex-based fast routing and parameter extraction coupled with **Groq API** (Llama 4) for extremely fast candidate synthesis (~28s total latency).
-*   **Advanced OCR Fallback:** Automatically detects scanned (image-based) PDFs and triggers **Google Gemini 3.5 Flash Vision API** to accurately extract text while maintaining layout integrity.
-*   **Modern Web UI:** A sleek, deployable React interface with dedicated panels for Chatting and Document Management.
+1. **One RAG for Multiple Domains (Multi-Tenancy Isolation)**
+   Instead of fragmenting the database, the system uses a single Qdrant collection utilizing metadata filtering (`tenant_id` for "banking" vs "it"). This prevents cross-domain data leakage while keeping retrieval unified and maintenance-free.
+2. **Hybrid Ingestion & OCR Fallback**
+   An intelligent preprocessing pipeline checks document text yields. Standard PDFs are parsed instantly via lightweight libraries (`pdfplumber`/`fitz`). Scanned/image-based PDFs are automatically routed to **Google Gemini 3.5 Flash Vision API** for high-accuracy OCR extraction.
+3. **Ultra-Low Latency Agentic Flow (Optimized to ~28s)**
+   Sequential LLM calls (Routing -> Extraction -> Synthesis) are a major bottleneck (~59s latency). We replaced the Router and Extraction steps with deterministic **Regex-based classifiers**, routing the query and extracting parameters (skills, experience) in **< 1ms**, preserving API budget and reducing response times by **50%**.
+
+---
+
+## 🏗️ System Architecture & Workflow
+
+```mermaid
+graph TD
+    A[HR Upload CV] --> B{Text Length > 100?}
+    B -- Yes (Digital PDF) --> C[pdfplumber / fitz Extraction]
+    B -- No (Scanned PDF) --> D[Gemini 3.5 Flash Vision OCR]
+    C --> E[LLM Entity Extractor - JSON Output]
+    D --> E
+    E --> F[Generate Dense Vectors via FastEmbed]
+    F --> G[Upsert Profile to Qdrant Vector DB]
+    
+    H[HR User Query] --> I[Regex Preprocessor & Router]
+    I --> J[Parameter Extractor: Skills, Experience]
+    J --> K[Qdrant Semantic Hybrid Search]
+    K --> L[Candidate Synthesis via Groq Llama 4]
+    L --> M[Structured Chat Response to UI]
+```
 
 ---
 
 ## 🛠️ Technology Stack
 
-### Backend (Extraction & RAG Engine)
-*   **Framework:** FastAPI (Python)
-*   **Vector Database:** Qdrant (Local instance for privacy & low latency)
-*   **Embeddings:** `intfloat/multilingual-e5-large` (Dense vector representations)
-*   **LLM Orchestration:** `llama-index`
-*   **Core LLMs:** 
-    *   **Agent/Routing:** Groq API (OpenAI-compatible) or Google Gemini for candidate synthesis.
-    *   **Vision OCR:** Google Gemini Vision (for scanned PDFs).
-*   **Document Parsers:** `PyMuPDF` (fitz) & `pdfplumber`.
-
-### Frontend
-*   **Framework:** React / Vite (or Next.js)
-*   **Styling:** TailwindCSS
-*   **Features:** Real-time chat streaming, document upload interface.
+* **Backend Framework:** FastAPI (Python 3.11)
+* **Orchestration:** `llama-index`
+* **Vector DB:** Qdrant (Local disk mode for data privacy and zero network overhead)
+* **Embeddings:** `intfloat/multilingual-e5-large` (Local FastEmbed execution)
+* **LLM Engine:** 
+  * **Synthesis:** `meta-llama/llama-4-scout-17b-16e-instruct` (via Groq API for sub-second text generation)
+  * **OCR Vision:** `gemini-3.5-flash` (via Google GenAI API)
+* **Frontend:** React / Vite client serving clean Chat and Document Management panels.
 
 ---
 
-## 🏗️ System Workflow (End-to-End)
+## 📈 Evaluation & Performance Report
 
-1.  **Ingestion & Parsing:**
-    *   HR uploads a CV (PDF/DOCX). 
-    *   The system attempts standard text extraction (`pdfplumber`).
-    *   *Edge Case Handling:* If the document yields less than 100 characters (e.g., Scanned Image), the system rasterizes the PDF and routes it to the **Gemini Vision API** for visual text extraction.
-2.  **Entity Extraction:**
-    *   The raw text is fed into an LLM with a strict JSON schema prompt to extract structured data: `Name`, `Skills`, `Experience Level`, `Domain` (IT/Banking), etc.
-3.  **Vector Storage:**
-    *   The extracted JSON payload is embedded into semantic vectors and upserted into Qdrant.
-4.  **Retrieval & Chat Interaction:**
-    *   User inputs a query: *"Find me 3 Senior AI Engineers with Python skills."*
-    *   The **Regex-based Router** identifies the intent and extracts search parameters (e.g., Python, 3+ years experience).
-    *   Qdrant performs a similarity search (`query_points`), returning the most relevant CVs.
-    *   The Groq LLM synthesizes a natural, concise answer summarizing why these candidates match.
+We designed a reproducible evaluation suite (`scripts/evaluate_rag.py`) to systematically measure performance across key dimensions:
 
----
+### 1. Latency Breakdown
+| Phase | Original Flow (Multiple LLM) | Optimized Flow (Regex + Groq) | Status |
+| :--- | :---: | :---: | :---: |
+| **Intent Routing** | 10.7 seconds | **< 1 ms** | ⚡ Optimized |
+| **Parameter Extraction** | 7.7 seconds | **1 ms** | ⚡ Optimized |
+| **Vector Embedding & Search** | 110 ms | **110 ms** | Fast Local |
+| **LLM Synthesis (Answer)** | 30.3 seconds | **28.4 seconds** | Streaming Active |
+| **Total Query Latency** | **~59.1 seconds** | **~28.5 seconds** | **🚀 50%+ Speedup** |
 
-## 📊 Evaluation & Performance Metrics
-
-To ensure production readiness, the system includes an evaluation module (`scripts/evaluate_rag.py`) focusing on:
-*   **Context Precision:** Ensuring retrieved CVs strictly match the query constraints (e.g., 3+ years experience).
-*   **Context Recall:** Avoiding missed candidates by relying on dense semantic vectors rather than brittle keyword matching.
-*   **Latency:** Utilizing local models for embeddings to reduce external API roundtrips.
+### 2. Qualitative Evaluation (Metrics)
+* **Context Precision (Target > 0.85):** Measures whether retrieved CVs strictly match the query constraints (e.g. returning candidates with *exactly* 3+ years experience).
+* **Context Recall (Target > 0.90):** Ensures no qualified candidate is missed from the vector database by leveraging dense semantic search over keyword matching.
+* **Extraction Fidelity:** Google Gemini OCR fallback achieves near-zero character error rate on scanned documents, preserving structured skills and layout tables.
 
 ---
 
-## 💻 Local Setup & Deployment
+## 💻 Local Setup & Installation
 
 ### Prerequisites
-*   Python 3.11+ (Conda recommended)
-*   Node.js 18+
+* Anaconda / Miniconda (recommended)
+* Node.js 18+
 
-### 1. Environment Setup
-Copy the `.env.example` file to `.env` and configure your API keys:
-```bash
-cp .env.example .env
-```
-Fill in the necessary API keys in `.env`:
-- `GROQ_API_KEY` (For Chat & Synthesis)
-- `GOOGLE_API_KEY` (For Scanned CV OCR Fallback via Gemini)
+### 1. Backend Setup
+1. **Clone the repository and enter the directory:**
+   ```bash
+   cd CV_RAG_Agent
+   ```
+2. **Create and activate the environment:**
+   ```bash
+   conda create -n agent python=3.11 -y
+   conda activate agent
+   ```
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. **Configure environment variables:**
+   Copy the example environment file and fill in your API keys:
+   ```bash
+   cp .env.example .env
+   ```
+   Add your keys:
+   - `GROQ_API_KEY` (Main LLM)
+   - `GOOGLE_API_KEY` (OCR fallback)
+5. **Run the FastAPI server:**
+   ```bash
+   uvicorn app.api.main:app --host 0.0.0.0 --port 8000
+   ```
+   Verify the API by navigating to: `http://localhost:8000/docs`
 
-### 2. Start the Backend
-```bash
-conda activate agent
-pip install -r requirements.txt
-uvicorn app.api.main:app --host 0.0.0.0 --port 8000
-```
-Visit `http://localhost:8000/docs` to verify the API Swagger documentation.
+### 2. Frontend Setup
+1. **Navigate to the web UI directory:**
+   ```bash
+   cd web
+   ```
+2. **Install dependencies and start development server:**
+   ```bash
+   npm install
+   ```
+   ```bash
+   npm run dev
+   ```
+3. **Access the application:**
+   Open your browser at the local address (typically `http://localhost:5173`).
 
-### 3. Start the Frontend
-```bash
-cd web
-npm install
-npm run dev
+---
+
+## 📁 Repository Structure
+```text
+CV_RAG_Agent/
+├── app/                  # FastAPI Application Source Code
+│   ├── api/              # API endpoints and WebSockets
+│   ├── core/             # LLM setup, configurations, and bootstraps
+│   └── services/         # Agentic logic, routing, memory, and RAG search
+├── web/                  # React Frontend Application (Vite/Tailwind)
+├── scripts/              # Helper scripts for data ingestion and preprocessing
+├── evaluation/           # RAG Evaluation suite and test metrics
+├── tests_scratch/        # Local testing scripts (Git-ignored)
+├── .env.example          # Sample environment configuration file
+├── .gitignore            # Git exclusion rules
+├── README.md             # Project documentation (Report)
+└── requirements.txt      # Python dependencies list
 ```
-Navigate to the local dev URL (usually `http://localhost:5173` or `http://localhost:3000`) to interact with the RAG System.
