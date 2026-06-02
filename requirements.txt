@@ -1,0 +1,63 @@
+# ============================================================
+# VietRAG2 Multitenant Assistant - Python Dependencies
+# Install:  pip install -r requirements.txt
+# Python:   >= 3.11
+# ============================================================
+
+# --- Core Web Framework ---
+fastapi>=0.115.0
+uvicorn[standard]>=0.34.0
+python-multipart>=0.0.9          # FastAPI file uploads (UploadFile)
+
+# --- LlamaIndex (RAG framework) ---
+llama-index-core>=0.12.0
+llama-index-embeddings-huggingface>=0.5.0
+llama-index-vector-stores-qdrant>=0.6.0
+llama-index-llms-openai>=0.4.0   # OpenAI provider
+llama-index-llms-groq>=0.3.0     # Groq provider (evaluation scripts)
+llama-index-llms-google-genai>=0.1.0  # Google Gemini provider
+llama-index-readers-file>=0.4.0  # SimpleDirectoryReader
+
+# --- LLM SDK (OpenAI-compatible calls) ---
+openai>=1.0.0                    # Groq/OpenAI-compat sử dụng SDK này
+httpx>=0.27.0                    # HTTP client cho openai_compat_llm.py
+
+# --- Vector Store ---
+qdrant-client>=1.13.0
+
+# --- Embeddings & NLP ---
+sentence-transformers>=2.6.0
+numpy>=1.26.0
+
+# --- Database / ORM ---
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0           # PostgreSQL driver (nếu dùng PostgreSQL)
+
+# --- Firebase Auth ---
+firebase-admin>=6.0.0
+
+# --- Document Ingestion ---
+docling>=2.0.0                   # PDF/Document converter
+pdfplumber>=0.11.0               # PDF text extraction (cv_parser)
+python-docx>=1.1.0               # DOCX text extraction (cv_parser)
+
+# --- Data Processing ---
+pandas>=2.0.0
+
+# --- HTTP & Environment ---
+requests>=2.31.0
+python-dotenv>=1.0.0
+pydantic>=2.0.0
+
+# --- ChromaDB (optional - chỉ dùng trong scripts/) ---
+# chromadb>=0.5.0
+
+# --- Local LLM (optional - chỉ khi LLM_PROVIDER=llama_cpp) ---
+# llama-cpp-python>=0.3.0
+
+# --- Evaluation (optional - chỉ dùng trong evaluation/) ---
+# ragas[all]>=0.3.0
+# datasets>=2.0.0
+
+# --- Testing (dev only) ---
+# pytest>=8.0.0

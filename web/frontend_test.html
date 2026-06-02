@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NovaRAG - Giải pháp AI Chăm sóc Khách hàng Tự động</title>
+  <meta name="description"
+    content="NovaRAG - Trợ lý AI thế hệ mới dành cho Trung tâm Đào tạo & Doanh nghiệp. Tự động hóa CSKH, tra cứu chính xác từ tài liệu nội bộ." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Custom tweaks for the 'Business' feel */
+    .demo-presets {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .preset-btn {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #e2e8f0;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .preset-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: #38bdf8;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a href="#hero" class="logo"> NOVA<span class="logo__dot">.</span>AI </a>
+      <nav class="nav">
+        <ul class="nav__list">
+          <li><a href="#hero" class="nav__link">Trang chủ</a></li>
+          <li><a href="#highlights" class="nav__link">Lợi ích</a></li>
+          <li><a href="#features" class="nav__link">Tính năng</a></li>
+          <li><a href="#usecases" class="nav__link">Khách hàng</a></li>
+          <li><a href="#demo" class="nav__link">Trải nghiệm</a></li>
+        </ul>
+        <a href="#demo" class="btn btn--primary nav__cta">Dùng thử miễn phí</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero" class="hero">
+      <div class="container hero__inner js-reveal">
+        <div class="hero__content">
+          <div class="hero__eyebrow">Thế hệ AI Chăm sóc khách hàng mới</div>
+          <h1 class="hero__title">
+            Biến tài liệu doanh nghiệp thành <span style="color: #38bdf8">Trợ lý ảo thông minh</span> 24/7.
+          </h1>
+          <p class="hero__subtitle">
+            Giải pháp AI tối ưu cho Trung tâm Đào tạo & SME. Tự động trả lời 80% câu hỏi lặp lại,
+            chính xác tuyệt đối dựa trên dữ liệu riêng của bạn. Không bịa đặt, không sai lệch.
+          </p>
+          <ul class="hero__bullets">
+            <li><span class="hero__dot"></span> <strong>Siêu tiết kiệm:</strong> Tối ưu Token đầu vào, giảm chi phí API
+              xuống mức thấp nhất.</li>
+            <li><span class="hero__dot"></span> <strong>Chính xác:</strong> Chỉ trả lời dựa trên tài liệu bạn cung cấp.
+            </li>
+            <li><span class="hero__dot"></span> <strong>Bảo mật:</strong> Dữ liệu từng chi nhánh được tách biệt hoàn
+              toàn.</li>
+            <li><span class="hero__dot"></span> <strong>Tốc độ:</strong> Phản hồi ngay lập tức, giữ chân khách hàng
+              24/7.</li>
+          </ul>
+          <div class="hero__actions">
+            <a href="#demo" class="btn btn--primary">Trải nghiệm ngay</a>
+            <a href="#highlights" class="btn btn--ghost">Tìm hiểu thêm</a>
+          </div>
+          <div class="hero__trust">
+            <div class="hero__avatars">
+              <div class="hero__avatar">BP</div>
+              <div class="hero__avatar">ES</div>
+              <div class="hero__avatar">FE</div>
+            </div>
+            <span>Được tin dùng bởi 10+ trung tâm đào tạo hàng đầu.</span>
+          </div>
+        </div>
+
+        <aside class="hero__mock" aria-hidden="true">
+          <div class="hero__mock-header">
+            <div class="hero__mock-dots">
+              <span class="hero__mock-dot"></span>
+              <span class="hero__mock-dot"></span>
+              <span class="hero__mock-dot"></span>
+            </div>
+            <div class="hero__mock-pill">Live Assistant Demo</div>
+          </div>
+          <div class="hero__mock-search">
+            <span>Q:</span>
+            <span>Khóa IELTS 6.5 học phí bao nhiêu và cam kết gì?</span>
+            <span class="hero__cursor"></span>
+          </div>
+          <div class="hero__mock-list">
+            <div class="hero__mock-item">
+              <div class="hero__mock-item-header">
+                <div class="hero__mock-name">AI Assistant</div>
+                <div class="hero__mock-tag">Trả lời tự động</div>
+              </div>
+              <div class="hero__mock-meta" style="color: #e2e8f0; margin-top: 4px; line-height: 1.4;">
+                Dạ khóa IELTS 6.5 (Master) có học phí 15.000.000đ/khóa. <br>
+                Cam kết đầu ra bằng văn bản, học lại miễn phí nếu không đạt.
+              </div>
+              <div class="hero__mock-meta" style="margin-top: 6px; font-size: 0.7rem; color: #9ca3af;">
+                Nguồn: bang_gia_2024.pdf (Trang 3)
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- HIGHLIGHTS -->
+    <section id="highlights" class="section section--dark">
+      <div class="container js-reveal">
+        <div class="section__header section__header--center">
+          <div class="section__eyebrow">Tại sao chọn Nova.AI?</div>
+          <h2>Giải quyết nỗi đau CSKH & Tra cứu thông tin</h2>
+          <p>
+            Không còn tốn nhân sự trực page đêm khuya. Không còn trả lời sai chính sách.
+            Mọi thứ được tự động hóa chuẩn xác.
+          </p>
+        </div>
+        <div class="highlights-grid">
+          <article class="highlight-card">
+            <div class="highlight-card__icon">🎯</div>
+            <h3>Chính xác tuyệt đối</h3>
+            <p>
+              Khác với ChatGPT chung chung, Nova.AI sử dụng công nghệ <strong>Hybrid RAG</strong> để tìm kiếm chính xác
+              từng con số, quy định trong văn bản nội bộ của bạn.
+            </p>
+          </article>
+          <article class="highlight-card">
+            <div class="highlight-card__icon">🔒</div>
+            <h3>Bảo mật dữ liệu riêng</h3>
+            <p>
+              Hệ thống <strong>Multi-tenant</strong> đảm bảo dữ liệu của bạn là duy nhất và không bị chia sẻ chéo. Dữ
+              liệu của chi nhánh nào, chỉ chi nhánh đó thấy.
+            </p>
+          </article>
+          <article class="highlight-card">
+            <div class="highlight-card__icon">💰</div>
+            <h3>Tiết kiệm 80% chi phí API</h3>
+            <p>
+              Công nghệ <strong>Context-aware Chunking</strong> giúp chọn lọc chính xác đoạn văn bản cần thiết. Không
+              nạp rác vào Prompt -> Không tốn tiền Token vô ích cho LLM.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="section section--light">
+      <div class="container js-reveal">
+        <div class="section__header">
+          <div class="section__eyebrow">Công nghệ lõi</div>
+          <h2>Sức mạnh đằng sau sự đơn giản</h2>
+          <p>
+            Chúng tôi đóng gói những công nghệ AI phức tạp nhất vào một giao diện đơn giản, dễ sử dụng cho mọi nhân
+            viên.
+          </p>
+        </div>
+        <div class="features-layout">
+          <div class="features-visual">
+            <div class="features-visual__inner">
+              <div>
+                <p class="section__eyebrow">Quy trình xử lý</p>
+                <h3>Từ Tài liệu đến Câu trả lời</h3>
+                <p style="font-size: 0.9rem; color: #9ca3af; margin-top: 10px;">
+                  1. Bạn upload tài liệu (Học phí, Lịch khai giảng...) <br>
+                  2. AI bóc tách và hiểu ngữ nghĩa <br>
+                  3. Khách hàng hỏi -> AI trả lời và <strong>trích dẫn nguồn</strong> để đối chứng.
+                </p>
+              </div>
+              <div style="margin-top: 20px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px;">
+                <code style="color: #38bdf8; font-size: 0.8rem;">
+                    > Hiểu bảng biểu phức tạp<br>
+                    > Hiểu tiếng Việt địa phương<br>
+                    > Tự động từ chối câu hỏi ngoài lề
+                  </code>
+              </div>
+            </div>
+          </div>
+          <div class="features-text-list">
+            <div class="feature-line">
+              <div class="feature-line__icon">💬</div>
+              <div class="feature-line__text">
+                <h3>Tương tác tự nhiên như người</h3>
+                <p>
+                  Khả năng hiểu ý định (Intent Detection) để phân biệt câu hỏi chào xã giao và câu hỏi nghiệp vụ, giúp
+                  cuộc hội thoại mượt mà.
+                </p>
+              </div>
+            </div>
+            <div class="feature-line">
+              <div class="feature-line__icon">🔌</div>
+              <div class="feature-line__text">
+                <h3>Tích hợp mọi nền tảng</h3>
+                <p>
+                  Sẵn sàng nhúng vào Website, Zalo OA, Messenger hoặc ứng dụng nội bộ qua API tiêu chuẩn.
+                </p>
+              </div>
+            </div>
+            <div class="feature-line">
+              <div class="feature-line__icon">📊</div>
+              <div class="feature-line__text">
+                <h3>Báo cáo & Thấu hiểu</h3>
+                <p>
+                  Theo dõi xem khách hàng hay hỏi gì nhất. Phát hiện nội dung còn thiếu hụt để bổ sung tài liệu kịp
+                  thời.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- USE CASES -->
+    <section id="usecases" class="section section--dark">
+      <div class="container js-reveal">
+        <div class="section__header section__header--center">
+          <div class="section__eyebrow">Ứng dụng thực tế</div>
+          <h2>Ai nên sử dụng Nova.AI?</h2>
+        </div>
+        <div class="usecases-grid">
+          <article class="usecase">
+            <h3>🎓 Trung tâm Đào tạo / Anh ngữ</h3>
+            <p>
+              Tự động tư vấn lộ trình học, báo giá, lịch khai giảng. Giảm 90% thời gian telesales trả lời những câu hỏi
+              cơ bản.
+            </p>
+          </article>
+          <article class="usecase">
+            <h3>🏥 Phòng khám / Spa</h3>
+            <p>
+              Tư vấn dịch vụ, đặt lịch hẹn, hướng dẫn chuẩn bị trước khi khám. Chăm sóc khách hàng 24/7 không lỡ khách.
+            </p>
+          </article>
+          <article class="usecase">
+            <h3>🏢 Doanh nghiệp Nội bộ (HR)</h3>
+            <p>
+              Trợ lý ảo cho nhân viên: Hỏi về quy định nghỉ phép, bảo hiểm, quy trình thanh toán. Giảm tải cho phòng
+              nhân sự.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMO -->
+    <section id="demo" class="section section--light" style="background: linear-gradient(to bottom, #0f172a, #000);">
+      <div class="container js-reveal">
+        <div class="section__header section__header--center">
+          <div class="section__eyebrow">Live Demo</div>
+          <h2>Trải nghiệm ngay sức mạnh của Nova.AI</h2>
+          <p>
+            Dưới đây là bản demo trực tiếp kết nối với dữ liệu mẫu. Hãy thử đóng vai một học viên và đặt câu hỏi.
+          </p>
+        </div>
+        <div class="demo-layout">
+          <div class="demo-panel">
+            <div class="demo-panel__header">
+              <span style="font-size: 0.85rem; color: #9ca3af;">Giả lập Ngữ cảnh</span>
+              <span id="statusLabel" class="demo-panel__status-label status-idle">Sẵn sàng kết nối</span>
+            </div>
+
+            <div class="demo-presets">
+              <button type="button" class="preset-btn" onclick="applyPreset('brightpath')">🏢 BrightPath (Anh
+                ngữ)</button>
+              <button type="button" class="preset-btn" onclick="applyPreset('flexenglish')">🏫 FlexEnglish (Giao
+                tiếp)</button>
+              <button type="button" class="preset-btn" onclick="applyPreset('hr')">👔 HR Policy (Nội bộ)</button>
+            </div>
+
+            <form class="demo-form" onsubmit="return false;">
+              <div class="form-group">
+                <label for="tenantId">Dữ liệu Trung tâm (Tenant)</label>
+                <input id="tenantId" type="text" readonly value="brightpathacademy"
+                  style="opacity: 0.7; cursor: not-allowed;" />
+              </div>
+              <!-- Hidden generic fields for simplicity -->
+              <input id="branchId" type="hidden" value="" />
+              <input id="sessionId" type="hidden" value="" />
+
+              <div class="form-group">
+                <label for="userQuestion">Câu hỏi của bạn</label>
+                <textarea id="userQuestion" placeholder="Ví dụ: Khóa IELTS 6.5 học phí bao nhiêu?"></textarea>
+              </div>
+              <button id="btnAsk" class="btn btn--primary">Gửi câu hỏi</button>
+            </form>
+            <div class="demo-hint" style="margin-top: 15px; text-align: center;">
+              * Hệ thống sẽ trả lời từng từ một (Streaming) để tăng trải nghiệm.
+            </div>
+          </div>
+
+          <div class="demo-panel">
+            <div class="demo-panel__header">
+              <span style="font-size: 0.85rem; color: #9ca3af;">Trợ lý trả lời</span>
+              <span id="metaLine" class="demo-meta-line"></span>
+            </div>
+            <div id="answerContainer" class="demo-output">
+              <p class="demo-output__placeholder">
+                Xin chào! Tôi là trợ lý ảo AI. Bạn cần tư vấn thông tin gì về khóa học hôm nay ạ?
+              </p>
+            </div>
+            <div id="sourcesContainer" class="demo-sources"></div>
+            <div class="demo-feedback">
+              <button id="btnUp" class="demo-feedback__btn" type="button">👍 Hài lòng</button>
+              <button id="btnDown" class="demo-feedback__btn" type="button">👎 Chưa hài lòng</button>
+              <span id="feedbackStatus" class="demo-feedback__status"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>&copy; 2025 Nova.AI Technology. All rights reserved.</span>
+      <div class="footer__links">
+        <a href="#">Chính sách bảo mật</a>
+        <a href="#">Điều khoản</a>
+        <a href="#">Liên hệ</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="appjs.js"></script>
+  <script>
+    // Simple preset handler embedded specifically for this landing page experience
+    function applyPreset(type) {
+      const tInput = document.getElementById('tenantId');
+      const qInput = document.getElementById('userQuestion');
+
+      if (type === 'brightpath') {
+        tInput.value = 'brightpathacademy';
+        qInput.value = 'Trung tâm có cam kết đầu ra cho khóa IELTS không?';
+      } else if (type === 'flexenglish') {
+        tInput.value = 'tenant_flexenglish'; // Assuming this tenant exists based on previous files
+        qInput.value = 'Lớp giao tiếp buổi tối học lúc mấy giờ?';
+      } else if (type === 'hr') {
+        tInput.value = 'tenant_hr_policy';
+        qInput.value = 'Quy trình xin nghỉ phép như thế nào?';
+      }
+
+      // Visual feedback
+      qInput.focus();
+    }
+  </script>
+</body>
+
+</html>

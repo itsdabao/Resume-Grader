@@ -1,0 +1,273 @@
+[
+  {
+    "id": "greeting",
+    "questions": [
+      "chào",
+      "xin chào",
+      "hello",
+      "hi",
+      "chào bạn",
+      "chào em",
+      "chào anh",
+      "chào chị"
+    ],
+    "answer": "Dạ em chào anh/chị ạ. Em là trợ lý tư vấn của trung tâm. Anh/chị đang quan tâm khóa học nào (Giao tiếp/IELTS/TOEIC/Thiếu nhi) để em tư vấn nhanh nhất ạ?"
+  },
+  {
+    "id": "how_are_you",
+    "questions": [
+      "bạn khỏe không",
+      "em khỏe không",
+      "dạo này thế nào",
+      "bạn thế nào",
+      "bạn ổn không",
+      "how are you"
+    ],
+    "answer": "Dạ em vẫn ổn ạ. Em có thể hỗ trợ anh/chị hỏi về khóa học, học phí, lịch học, ưu đãi hoặc kiểm tra đầu vào. Anh/chị muốn hỏi nội dung nào ạ?"
+  },
+  {
+    "id": "who_are_you",
+    "questions": [
+      "bạn là ai",
+      "em là ai",
+      "ai đang nói",
+      "ai vậy",
+      "bạn tên gì",
+      "em tên gì",
+      "who are you"
+    ],
+    "answer": "Dạ em là trợ lý AI của trung tâm, hỗ trợ giải đáp thông tin và thu thập nhu cầu để tư vấn lộ trình phù hợp. Anh/chị muốn em tư vấn khóa học nào ạ?"
+  },
+  {
+    "id": "who_am_i",
+    "questions": [
+      "tôi là ai",
+      "anh là ai",
+      "chị là ai",
+      "bạn biết tôi là ai không",
+      "em biết tôi là ai không"
+    ],
+    "answer": "Dạ hiện tại em chưa có thông tin của anh/chị. Nếu anh/chị cho em xin **họ tên** và **số điện thoại**, em sẽ ghi nhận để tư vấn chính xác hơn ạ."
+  },
+  {
+    "id": "thanks",
+    "questions": [
+      "cảm ơn",
+      "thanks",
+      "thank you",
+      "cám ơn em",
+      "cảm ơn bạn",
+      "ok cảm ơn"
+    ],
+    "answer": "Dạ em cảm ơn anh/chị ạ. Nếu anh/chị muốn em tư vấn nhanh, anh/chị cho em xin SĐT để đội ngũ tư vấn liên hệ hỗ trợ chi tiết hơn nhé."
+  },
+  {
+    "id": "bye",
+    "questions": [
+      "tạm biệt",
+      "bye",
+      "chào nhé",
+      "hẹn gặp lại"
+    ],
+    "answer": "Dạ em chào anh/chị ạ. Khi cần tư vấn thêm về khóa học hoặc ưu đãi, anh/chị nhắn em bất cứ lúc nào nhé."
+  },
+  {
+    "id": "capabilities",
+    "questions": [
+      "bạn làm được gì",
+      "em làm được gì",
+      "bạn có thể làm gì",
+      "em có thể làm gì",
+      "help",
+      "giúp gì"
+    ],
+    "answer": "Dạ em có thể: (1) trả lời thông tin khóa học/học phí/lịch học/ưu đãi dựa trên tài liệu của trung tâm, (2) gợi ý lộ trình học, (3) ghi nhận nhu cầu và SĐT để tư vấn viên liên hệ. Anh/chị đang quan tâm khóa nào ạ?"
+  },
+  {
+    "id": "handoff_human",
+    "questions": [
+      "tư vấn viên",
+      "gặp người thật",
+      "nói chuyện với người",
+      "gọi cho tôi",
+      "liên hệ tư vấn",
+      "có ai tư vấn không"
+    ],
+    "answer": "Dạ được ạ. Anh/chị cho em xin **SĐT** và **khung giờ thuận tiện**, em sẽ chuyển cho tư vấn viên liên hệ hỗ trợ ngay ạ."
+  },
+  {
+    "id": "faq_excel_0",
+    "questions": [
+      "Học IELTS ở đây có cam kết đầu ra không?"
+    ],
+    "answer": "Dạ có ạ. Trung tâm cam kết đầu ra bằng văn bản. Nếu không đạt điểm mục tiêu, anh/chị được học lại miễn phí ạ."
+  },
+  {
+    "id": "faq_excel_1",
+    "questions": [
+      "Lớp giao tiếp có giáo viên nước ngoài không?"
+    ],
+    "answer": "Dạ lớp Giao tiếp bên em học 100% với giáo viên bản ngữ (Anh/Mỹ/Úc) có chứng chỉ giảng dạy quốc tế ạ."
+  },
+  {
+    "id": "faq_excel_2",
+    "questions": [
+      "Học phí khóa TOEIC bao nhiêu?"
+    ],
+    "answer": "Dạ khóa TOEIC căn bản học phí là 3.500.000đ/khóa (3 tháng). Đang có ưu đãi giảm 500k cho đăng ký sớm ạ."
+  },
+  {
+    "id": "faq_excel_3",
+    "questions": [
+      "Trung tâm ở đâu?"
+    ],
+    "answer": "Dạ trung tâm có 2 cơ sở: 123 Nguyễn Văn Linh, Đà Nẵng và 456 Lê Duẩn, Hà Nội ạ."
+  },
+  {
+    "id": "faq_excel_4",
+    "questions": [
+      "Xin chào"
+    ],
+    "answer": "Dạ chào anh/chị, em có thể giúp gì cho mình ạ?"
+  },
+  {
+    "id": "faq_excel_0",
+    "questions": [
+      "Trung tâm ở đâu?"
+    ],
+    "answer": "Dạ trung tâm có 2 cơ sở: 123 Nguyễn Văn Linh, Đà Nẵng và 456 Lê Duẩn, Hà Nội ạ."
+  },
+  {
+    "id": "faq_excel_1",
+    "questions": [
+      "Giờ làm việc của trung tâm thế nào?"
+    ],
+    "answer": "Dạ bên em mở cửa từ 8h00 - 21h00 tất cả các ngày trong tuần ạ."
+  },
+  {
+    "id": "faq_excel_2",
+    "questions": [
+      "Có chỗ để xe không?"
+    ],
+    "answer": "Dạ có ạ, trung tâm có hầm để xe rộng rãi và miễn phí cho học viên ạ."
+  },
+  {
+    "id": "faq_excel_3",
+    "questions": [
+      "Học phí khóa TOEIC bao nhiêu?"
+    ],
+    "answer": "Dạ khóa TOEIC căn bản học phí là 3.500.000đ/khóa (3 tháng). Đang có ưu đãi giảm 500k cho đăng ký sớm ạ."
+  },
+  {
+    "id": "faq_excel_4",
+    "questions": [
+      "Khóa IELTS học phí thế nào?"
+    ],
+    "answer": "Dạ IELTS Foundation học phí 5.000.000đ/khóa. IELTS Intensive là 9.000.000đ/khóa ạ."
+  },
+  {
+    "id": "faq_excel_5",
+    "questions": [
+      "Khóa Giao tiếp bao nhiêu tiền?"
+    ],
+    "answer": "Dạ khóa Giao tiếp phản xạ học phí 4.200.000đ/khóa (2.5 tháng) ạ."
+  },
+  {
+    "id": "faq_excel_6",
+    "questions": [
+      "Có lớp cho trẻ em không?"
+    ],
+    "answer": "Dạ có ạ, bên em có các lớp Starters, Movers, Flyers cho bé từ 6-11 tuổi ạ."
+  },
+  {
+    "id": "faq_excel_7",
+    "questions": [
+      "Học IELTS ở đây có cam kết đầu ra không?"
+    ],
+    "answer": "Dạ có ạ. Trung tâm cam kết đầu ra bằng văn bản. Nếu không đạt điểm mục tiêu, anh/chị được học lại miễn phí ạ."
+  },
+  {
+    "id": "faq_excel_8",
+    "questions": [
+      "Lớp giao tiếp có giáo viên nước ngoài không?"
+    ],
+    "answer": "Dạ lớp Giao tiếp bên em học 100% với giáo viên bản ngữ (Anh/Mỹ/Úc) có chứng chỉ giảng dạy quốc tế ạ."
+  },
+  {
+    "id": "faq_excel_9",
+    "questions": [
+      "Một lớp tối đa bao nhiêu bạn?"
+    ],
+    "answer": "Dạ để đảm bảo chất lượng, mỗi lớp bên em chỉ từ 10-15 học viên thôi ạ."
+  },
+  {
+    "id": "faq_excel_10",
+    "questions": [
+      "Có được học thử không?"
+    ],
+    "answer": "Dạ anh/chị được đăng ký học thử miễn phí 2 buổi đầu tiên để trải nghiệm phương pháp dạy ạ."
+  },
+  {
+    "id": "faq_excel_11",
+    "questions": [
+      "Đăng ký rồi có được hoàn học phí không?"
+    ],
+    "answer": "Dạ nếu rút học phí trước ngày khai giảng 7 ngày thì được hoàn 100%. Sau đó thì bên em xin phép không hoàn lại ạ."
+  },
+  {
+    "id": "faq_excel_12",
+    "questions": [
+      "Có cho đóng học phí trả góp không?"
+    ],
+    "answer": "Dạ trung tâm có hỗ trợ trả góp 0% lãi suất qua thẻ tín dụng liên kết với 20 ngân hàng ạ."
+  },
+  {
+    "id": "faq_excel_13",
+    "questions": [
+      "Nếu bận có được bảo lưu không?"
+    ],
+    "answer": "Dạ anh/chị được bảo lưu tối đa 6 tháng nếu có lý do chính đáng (công tác, ốm đau...) ạ."
+  },
+  {
+    "id": "faq_excel_14",
+    "questions": [
+      "Kiểm tra đầu vào có mất phí không?"
+    ],
+    "answer": "Dạ kiểm tra đầu vào (Placement Test) là hoàn toàn miễn phí ạ."
+  },
+  {
+    "id": "faq_excel_15",
+    "questions": [
+      "Bao lâu thì có lịch học mới?"
+    ],
+    "answer": "Dạ khóa mới khai giảng liên tục vào ngày 1 và 15 hàng tháng ạ."
+  },
+  {
+    "id": "faq_excel_16",
+    "questions": [
+      "Học xong có chứng chỉ không?"
+    ],
+    "answer": "Dạ cuối khóa mình sẽ có bài thi và được cấp chứng nhận hoàn thành khóa học của trung tâm ạ."
+  },
+  {
+    "id": "faq_excel_17",
+    "questions": [
+      "Giáo trình bên mình dùng là gì?"
+    ],
+    "answer": "Dạ giáo trình do trung tâm biên soạn độc quyền kết hợp với các tài liệu chuẩn Cambridge/Oxford ạ."
+  },
+  {
+    "id": "faq_excel_18",
+    "questions": [
+      "Có lớp 1 kèm 1 không?"
+    ],
+    "answer": "Dạ có ạ, hình thức VIP 1-1 học phí sẽ cao hơn lớp thường, anh/chị có muốn em báo giá chi tiết không ạ?"
+  },
+  {
+    "id": "faq_excel_19",
+    "questions": [
+      "Xin chào"
+    ],
+    "answer": "Dạ chào anh/chị, em có thể giúp gì cho mình ạ?"
+  }
+]

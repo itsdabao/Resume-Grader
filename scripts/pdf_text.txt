@@ -1,0 +1,57 @@
+AI Team – Intern Engineering – 04 May
+1.OVERVIEW:
+• In this assessment, you are required to build a tool that uses Large Language Models
+(LLMs) to extract structured information from unstructured resumes (CVs). The goal is to
+evaluate your ability to work with LLMs, handle PDF files, and design a reproducible
+evaluation method for your tool.
+• You may use any LLM provider (open or closed source), and any orchestration frameworks
+or tools such as LangChain, LangGraph, CrewAI, OpenAI SDK, etc.
+• This is a design-and-build exercise. We are interested in your end-to-end thinking: how
+you process inputs, prompt or design the LLM interaction, validate outputs, and document
+the solution.
+• NOTE: Candidates are free to use AI coding tools (e.g., Claude Code, Antigravity, etc.). We
+do not evaluate based on whether AI tools are used. Instead, we focus on how effectively
+you leverage these tools and, more importantly, how well you design, explain, and
+demonstrate that your system works end-to-end thinking.
+• Time Estimate: The full test should take approximately focus times 6-8 hours maybe less
+since AI Agent Code. You may take breaks, but please submit your work within 120 hours
+(5 days) of receiving the test from Gmail sent.
+2. DATASET INPUT:
+Use the following resume dataset:
+https://www.kaggle.com/datasets/snehaanbhawal/resume-dataset?select=data
+Important: Only use files from the “BANKING” and ““INFORMATION-TECHNOLOGY” folder.
+Submissions using files outside this folder will not be accepted.
+3. EVALUATION CRITERIA:
+• Multiple format handling and input: How well you use the LLM to extract the entity from
+the unstructured data (plain-text or scanned PDF files)
+• RAG Extraction: How accurately you use the LLM to implement the prompt to extract
+entities and store them in the JSON file
+• Product deployments: How can you can serve your ideas as valuable products (UI for users
+chat, UI for user manage documents, etc.)
+
+4. OUTPUT REQUIREMENTS
+I. RAG Input Handling (One RAG for Multiple) – 60% Score
+a. The ONE RAG solution one for multiple domains
+Allow HR User query both CV Resume for Information Technology candidate and
+Banking Candidate in RAG
+II. Deployable Product Requirement – 30% Score
+a. The candidate must demonstrate how the RAG system can be deployed as a user-
+facing product
+Example: Streamlit app or similar lightweight interface or anythings
+b. The product should allow users to upload/query documents and receive responses
+III. Evaluation RAG Requirement (Optional feature but it’s very good to have) – 10% Score
+a. Candidates should explain how they measure performance (e.g., accuracy,
+relevance, latency)
+b. Include both qualitative (manual review) and quantitative metrics (e.g., retrieval
+precision, answer correctness)
+c. The ONE RAG solution multiple input
+i. Text-based PDFs (digitally generated)
+ii. Scanned PDFs (image-based, requiring OCR)
+5. Submission: TRY TO REPORT BY ENGLISH
+You need to submit the following items:
+• Source Code: You can submit your code in a GitHub repo link x Demo Link Short
+• Documentation (short report or slide): Show your approach to implement this tool
+(technology stack, workflow, etc.) => PUT IT TO README GITHUB
+• Title Email: Test Assignment Submission – YOUR NAME – POSITION
+E.g. Test Assignment Submission – NGUYEN VAN A - AI Intern
+• Send to huylt@imt-soft.com | recruit@imt-soft.com

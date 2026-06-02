@@ -1,0 +1,11 @@
+ragas[all]>=0.3.0
+openai>=1.0.0
+
+[app]
+llama-index==0.14.5
+llama-index-embeddings-huggingface==0.6.1
+llama-index-vector-stores-qdrant==0.8.6
+qdrant-client==1.15.1
+python-dotenv>=1.0.0
+numpy>=1.26
+sentence-transformers>=2.6

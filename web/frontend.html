@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Viet RAG2 Multitenant Assistant</title>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; max-width: 900px; margin: 24px auto; padding: 0 16px; }
+    h1 { font-size: 1.6rem; margin-bottom: 0.25rem; }
+    small { color: #555; }
+    .row { display: flex; gap: 8px; margin-top: 12px; }
+    .row > * { flex: 1; }
+    textarea { width: 100%; min-height: 80px; padding: 8px; font-size: 0.95rem; }
+    input, select, button { padding: 8px; font-size: 0.95rem; }
+    button { cursor: pointer; }
+    #output { margin-top: 16px; padding: 12px; border-radius: 6px; background: #f7f7f7; white-space: pre-wrap; }
+    #sources { margin-top: 8px; font-size: 0.9rem; color: #444; }
+    .badge { display: inline-block; padding: 2px 6px; border-radius: 4px; background: #e0e7ff; color: #1d2a6b; font-size: 0.8rem; margin-right: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Viet RAG2 Multitenant Assistant</h1>
+  <small>Frontend demo đơn giản gọi <code>POST /query</code> trên <code>http://localhost:8000</code>.</small>
+
+  <div class="row">
+    <input id="tenant" placeholder="tenant_id (vd: brightpathacademy)" />
+    <button id="askBtn">Hỏi</button>
+  </div>
+
+  <div style="margin-top: 8px;">
+    <textarea id="question" placeholder="Nhập câu hỏi của bạn..."></textarea>
+  </div>
+
+  <div id="output"></div>
+  <div id="sources"></div>
+
+  <script>
+    const API_URL = "http://localhost:8000/query";
+
+    async function ask() {
+      const q = document.getElementById("question").value.trim();
+      const tenant = document.getElementById("tenant").value.trim() || null;
+      const output = document.getElementById("output");
+      const sourcesEl = document.getElementById("sources");
+
+      if (!q) {
+        alert("Vui lòng nhập câu hỏi.");
+        return;
+      }
+
+      output.textContent = "Đang gửi câu hỏi...";
+      sourcesEl.textContent = "";
+
+      try {
+        const resp = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            question: q,
+            tenant_id: tenant,
+            history: []  // demo: chưa giữ lịch sử ở frontend
+          })
+        });
+
+        if (!resp.ok) {
+          const text = await resp.text();
+          output.textContent = "Lỗi từ server (" + resp.status + "): " + text;
+          return;
+        }
+
+        const data = await resp.json();
+        output.textContent = data.answer || "(Không có câu trả lời)";
+
+        if (Array.isArray(data.sources) && data.sources.length) {
+          sourcesEl.innerHTML = "Sources: " + data.sources
+            .map(s => "<span class='badge'>" + String(s) + "</span>")
+            .join(" ");
+        }
+      } catch (err) {
+        output.textContent = "Không gọi được API: " + err;
+      }
+    }
+
+    document.getElementById("askBtn").addEventListener("click", ask);
+    document.getElementById("question").addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+        ask();
+      }
+    });
+  </script>
+</body>
+</html>
+

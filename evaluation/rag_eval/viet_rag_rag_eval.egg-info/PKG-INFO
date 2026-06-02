@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: viet-rag-rag-eval
+Version: 0.1.0
+Summary: RAGAS evaluation (app-backed RAG)
+Requires-Python: <3.12,>=3.11
+Requires-Dist: ragas[all]>=0.3.0
+Requires-Dist: openai>=1.0.0
+Provides-Extra: app
+Requires-Dist: llama-index==0.14.5; extra == "app"
+Requires-Dist: llama-index-embeddings-huggingface==0.6.1; extra == "app"
+Requires-Dist: llama-index-vector-stores-qdrant==0.8.6; extra == "app"
+Requires-Dist: qdrant-client==1.15.1; extra == "app"
+Requires-Dist: python-dotenv>=1.0.0; extra == "app"
+Requires-Dist: numpy>=1.26; extra == "app"
+Requires-Dist: sentence-transformers>=2.6; extra == "app"

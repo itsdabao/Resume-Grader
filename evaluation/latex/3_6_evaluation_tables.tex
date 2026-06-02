@@ -1,0 +1,116 @@
+% Tables for Section 3.6 (Evaluation)
+% Import into Overleaf:
+%   \input{evaluation/latex/3_6_evaluation_tables}
+%
+% Recommended packages:
+%   \usepackage{booktabs}
+%   \usepackage{graphicx}  % for \resizebox
+%
+% Data sources:
+% - RAGEval: RAGEval/rageval/evaluation/result/final_result.json
+% - RAGAS:   rag_eval/evals/experiments/awesome_ullman.csv
+
+\begin{table}[htbp]
+  \centering
+  \caption{Kết quả tổng quan (Overall).}
+  \label{tab:eval-overall}
+  \begin{tabular}{lll}
+    \toprule
+    Nhóm & Metric & Giá trị \\
+    \midrule
+    RAGEval & ROUGE-L & 0.2269 \\
+    RAGEval & Retrieval Precision & 0.1290 \\
+    RAGEval & Retrieval Recall & 0.6250 \\
+    RAGEval & EIR & 0.0934 \\
+    RAGEval (Keypoint) & Completeness & 0.5668 \\
+    RAGEval (Keypoint) & Hallucination & 0.0125 \\
+    RAGEval (Keypoint) & Irrelevance & 0.4207 \\
+    RAGAS & Correctness (pass rate) & 92.5\% (185/200) \\
+    \bottomrule
+  \end{tabular}
+  \vspace{2pt}
+  \caption*{\footnotesize Nguồn: \texttt{RAGEval/.../final\_result.json}, \texttt{rag\_eval/.../awesome\_ullman.csv}.}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \caption{RAGAS: Correctness theo \texttt{tenant\_id} (pass rate).}
+  \label{tab:ragas-by-tenant}
+  \begin{tabular}{lrr}
+    \toprule
+    \texttt{tenant\_id} & Số câu & Pass rate \\
+    \midrule
+    elitespeak & 50 & 1.00 \\
+    brightpathacademy & 50 & 0.96 \\
+    flexenglish & 50 & 0.96 \\
+    smartlingua & 50 & 0.78 \\
+    \bottomrule
+  \end{tabular}
+  \vspace{2pt}
+  \caption*{\footnotesize Nguồn: \texttt{rag\_eval/evals/experiments/awesome\_ullman.csv}.}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \caption{RAGAS: Correctness theo \texttt{query\_type} (pass rate).}
+  \label{tab:ragas-by-query-type}
+  \begin{tabular}{lrr}
+    \toprule
+    \texttt{query\_type} & Số câu & Pass rate \\
+    \midrule
+    Schedule Question & 34 & 1.0000 \\
+    Factual Question & 67 & 0.9851 \\
+    Comparison Question & 20 & 0.9500 \\
+    Summary Question & 16 & 0.9375 \\
+    Calculation Question & 20 & 0.8500 \\
+    Policy/Procedure Question & 25 & 0.8000 \\
+    Multi-hop Question & 18 & 0.7778 \\
+    \bottomrule
+  \end{tabular}
+  \vspace{2pt}
+  \caption*{\footnotesize Nguồn: \texttt{rag\_eval/evals/experiments/awesome\_ullman.csv}.}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \caption{RAGEval: Tổng hợp theo \texttt{tenant\_id} (trung bình trên 50 câu/tenant).}
+  \label{tab:rageval-by-tenant}
+  \resizebox{\textwidth}{!}{%
+    \begin{tabular}{lrrrrrrr}
+      \toprule
+      \texttt{tenant\_id} & ROUGE-L & Precision & Recall & EIR & Completeness & Hallucination & Irrelevance \\
+      \midrule
+      brightpathacademy & 0.2839 & 0.1360 & 0.5800 & 0.1709 & 0.5600 & 0.0000 & 0.4400 \\
+      elitespeak & 0.1984 & 0.1560 & 0.7800 & 0.0767 & 0.6040 & 0.0067 & 0.3893 \\
+      flexenglish & 0.2410 & 0.1120 & 0.6400 & 0.0719 & 0.5900 & 0.0167 & 0.3933 \\
+      smartlingua & 0.1844 & 0.1120 & 0.5000 & 0.0542 & 0.5133 & 0.0267 & 0.4600 \\
+      \bottomrule
+    \end{tabular}%
+  }
+  \vspace{2pt}
+  \caption*{\footnotesize Nguồn: \texttt{RAGEval/rageval/evaluation/result/intermediate\_result/}.}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \caption{RAGEval: Tổng hợp theo \texttt{query\_type} (trung bình).}
+  \label{tab:rageval-by-query-type}
+  \resizebox{\textwidth}{!}{%
+    \begin{tabular}{lrrrrrrr}
+      \toprule
+      \texttt{query\_type} & ROUGE-L & Precision & Recall & EIR & Completeness & Hallucination & Irrelevance \\
+      \midrule
+      Schedule Question & 0.3400 & 0.1941 & 0.9706 & 0.1175 & 0.9706 & 0.0000 & 0.0294 \\
+      Multi-hop Question & 0.3001 & 0.1222 & 0.5000 & 0.1293 & 0.5556 & 0.0833 & 0.3611 \\
+      Policy/Procedure Question & 0.2643 & 0.1040 & 0.6400 & 0.0713 & 0.4400 & 0.0133 & 0.5467 \\
+      Factual Question & 0.2276 & 0.0955 & 0.4776 & 0.0706 & 0.5672 & 0.0000 & 0.4328 \\
+      Summary Question & 0.1999 & 0.1375 & 0.5625 & 0.1443 & 0.5542 & 0.0208 & 0.4250 \\
+      Calculation Question & 0.1030 & 0.1800 & 0.7500 & 0.1123 & 0.4750 & 0.0000 & 0.5250 \\
+      Comparison Question & 0.0653 & 0.1100 & 0.5500 & 0.0646 & 0.1500 & 0.0167 & 0.8333 \\
+      \bottomrule
+    \end{tabular}%
+  }
+  \vspace{2pt}
+  \caption*{\footnotesize Nguồn: \texttt{RAGEval/rageval/evaluation/result/intermediate\_result/}.}
+\end{table}
+

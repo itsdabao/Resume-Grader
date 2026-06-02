@@ -1,0 +1,380 @@
+{
+  "metadata": {
+    "analysis_date": "2026-06-01T19:37:15.241344",
+    "total_pdfs": 235,
+    "banking_pdfs": 115,
+    "it_pdfs": 120
+  },
+  "extraction_quality": {
+    "successful_extraction": 235,
+    "extraction_errors": 0,
+    "error_files": [],
+    "text_based_pdfs": 235,
+    "scanned_pdfs_needing_ocr": 0,
+    "scanned_files": [],
+    "no_text_extracted": 0,
+    "no_text_files": [],
+    "pdfs_with_images": 0
+  },
+  "text_statistics": {
+    "all": {
+      "count": 235,
+      "mean_chars": 6391,
+      "median_chars": 5886,
+      "min_chars": 1549,
+      "max_chars": 20044,
+      "stdev_chars": 2511
+    },
+    "banking": {
+      "count": 115,
+      "mean_chars": 5867,
+      "median_chars": 5422,
+      "min_chars": 1549,
+      "max_chars": 15454
+    },
+    "it": {
+      "count": 120,
+      "mean_chars": 6894,
+      "median_chars": 6262,
+      "min_chars": 1860,
+      "max_chars": 20044
+    },
+    "word_counts": {
+      "mean": 868,
+      "median": 795,
+      "min": 224,
+      "max": 2679
+    },
+    "file_sizes_kb": {
+      "mean": 25.0,
+      "min": 15.6,
+      "max": 50.1
+    },
+    "page_counts": {
+      "mean": 2.0,
+      "min": 1,
+      "max": 4,
+      "distribution": {
+        "2": 175,
+        "1": 35,
+        "3": 22,
+        "4": 3
+      }
+    }
+  },
+  "entity_detection": {
+    "has_email": 1,
+    "has_phone": 71,
+    "has_url_or_linkedin": 9,
+    "has_education": 235,
+    "pct_with_email": 0.4,
+    "pct_with_phone": 30.2,
+    "pct_with_education": 100.0,
+    "top_skills_overall": [
+      [
+        "excel",
+        146
+      ],
+      [
+        "leadership",
+        110
+      ],
+      [
+        "compliance",
+        109
+      ],
+      [
+        "project management",
+        87
+      ],
+      [
+        "sql",
+        67
+      ],
+      [
+        "microsoft office",
+        63
+      ],
+      [
+        "audit",
+        58
+      ],
+      [
+        "accounting",
+        51
+      ],
+      [
+        "powerpoint",
+        44
+      ],
+      [
+        "oracle",
+        40
+      ],
+      [
+        "linux",
+        37
+      ],
+      [
+        "risk management",
+        32
+      ],
+      [
+        "html",
+        29
+      ],
+      [
+        "git",
+        26
+      ],
+      [
+        "aws",
+        24
+      ],
+      [
+        "sap",
+        22
+      ],
+      [
+        "java",
+        20
+      ],
+      [
+        "financial analysis",
+        17
+      ],
+      [
+        "css",
+        15
+      ],
+      [
+        "c++",
+        14
+      ]
+    ],
+    "top_skills_banking": [
+      [
+        "excel",
+        81
+      ],
+      [
+        "compliance",
+        66
+      ],
+      [
+        "leadership",
+        57
+      ],
+      [
+        "accounting",
+        36
+      ],
+      [
+        "audit",
+        35
+      ],
+      [
+        "powerpoint",
+        34
+      ],
+      [
+        "microsoft office",
+        32
+      ],
+      [
+        "project management",
+        29
+      ],
+      [
+        "risk management",
+        21
+      ],
+      [
+        "financial analysis",
+        17
+      ],
+      [
+        "sql",
+        16
+      ],
+      [
+        "aws",
+        15
+      ],
+      [
+        "oracle",
+        13
+      ],
+      [
+        "investment banking",
+        13
+      ],
+      [
+        "git",
+        7
+      ]
+    ],
+    "top_skills_it": [
+      [
+        "excel",
+        65
+      ],
+      [
+        "project management",
+        58
+      ],
+      [
+        "leadership",
+        53
+      ],
+      [
+        "sql",
+        51
+      ],
+      [
+        "compliance",
+        43
+      ],
+      [
+        "linux",
+        33
+      ],
+      [
+        "microsoft office",
+        31
+      ],
+      [
+        "oracle",
+        27
+      ],
+      [
+        "html",
+        23
+      ],
+      [
+        "audit",
+        23
+      ],
+      [
+        "git",
+        19
+      ],
+      [
+        "java",
+        15
+      ],
+      [
+        "sap",
+        15
+      ],
+      [
+        "accounting",
+        15
+      ],
+      [
+        "css",
+        14
+      ]
+    ],
+    "common_section_headers": [
+      [
+        "skills",
+        253
+      ],
+      [
+        "education",
+        181
+      ],
+      [
+        "experience",
+        157
+      ],
+      [
+        "summary",
+        110
+      ],
+      [
+        "certifications",
+        31
+      ],
+      [
+        "professional summary",
+        29
+      ],
+      [
+        "interests",
+        27
+      ],
+      [
+        "work experience",
+        21
+      ],
+      [
+        "languages",
+        18
+      ],
+      [
+        "technical skills",
+        7
+      ],
+      [
+        "professional profile",
+        6
+      ],
+      [
+        "profile",
+        5
+      ],
+      [
+        "objective",
+        3
+      ],
+      [
+        "certification",
+        2
+      ],
+      [
+        "project",
+        2
+      ]
+    ]
+  },
+  "quality_issues": {
+    "encoding_issues_count": 0,
+    "encoding_issue_files": [],
+    "garbled_text_count": 0,
+    "garbled_files": [],
+    "very_short_text_count": 0,
+    "very_short_files": [],
+    "very_long_text_count": 3,
+    "very_long_files": [
+      [
+        "21297521.pdf",
+        15454
+      ],
+      [
+        "18067556.pdf",
+        20044
+      ],
+      [
+        "19796840.pdf",
+        15647
+      ]
+    ],
+    "language_distribution": {
+      "en": 126,
+      "vi": 109
+    }
+  },
+  "csv_comparison": {
+    "csv_rows_banking": 115,
+    "csv_rows_it": 120,
+    "pdf_count_banking": 115,
+    "pdf_count_it": 120,
+    "text_length_correlation": [],
+    "csv_avg_length_banking": 6191,
+    "csv_avg_length_it": 7228,
+    "pdf_avg_length_banking": 5867,
+    "pdf_avg_length_it": 6894
+  }
+}

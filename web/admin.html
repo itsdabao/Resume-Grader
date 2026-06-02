@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NovaRAG Studio – Admin Dashboard</title>
+    <meta name="description" content="Admin Dashboard – metrics/logs theo tenant cho Viet RAG2 Multitenant Assistant." />
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/admin.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/static/frontend_test.html" class="logo"> NOVARAG<span class="logo__dot">•</span>STUDIO </a>
+        <nav class="nav">
+          <ul class="nav__list">
+            <li><a href="/admin" class="nav__link">Dashboard</a></li>
+            <li><a href="/static/frontend_test.html#demo" class="nav__link">Live Demo</a></li>
+          </ul>
+          <a href="/static/frontend_test.html#demo" class="btn btn--primary nav__cta">Chat Demo</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="section section--dark">
+        <div class="container js-reveal">
+          <div class="section__header">
+            <div class="section__eyebrow">HR Analytics</div>
+            <h2>Dashboard Quản trị CV</h2>
+            <p class="admin-muted">
+              Theo dõi chất lượng phản hồi, thời gian xử lý và log truy vấn CV của HR Agent.
+            </p>
+          </div>
+
+          <div class="admin-filters">
+            <div class="admin-field">
+              <label class="admin-label" for="tenantSelect">Phòng ban (Tenant)</label>
+              <select id="tenantSelect" class="admin-input">
+                <option value="hr_department">HR Department</option>
+              </select>
+            </div>
+            <div class="admin-field">
+              <label class="admin-label" for="sinceInput">Từ ngày</label>
+              <input id="sinceInput" class="admin-input" type="date" />
+            </div>
+            <div class="admin-field">
+              <label class="admin-label" for="untilInput">Đến ngày</label>
+              <input id="untilInput" class="admin-input" type="date" />
+            </div>
+            <div class="admin-actions">
+              <button id="btnRefresh" class="btn btn--primary">Refresh</button>
+              <button id="btnAuto" class="btn btn--ghost" data-auto="off">Auto: off</button>
+            </div>
+          </div>
+
+          <div class="admin-cards">
+            <div class="admin-card">
+              <div class="admin-card__label">Avg Time</div>
+              <div class="admin-card__value" id="mAvg">—</div>
+            </div>
+            <div class="admin-card">
+              <div class="admin-card__label">p95</div>
+              <div class="admin-card__value" id="mP95">—</div>
+            </div>
+            <div class="admin-card">
+              <div class="admin-card__label">Độ chính xác (Feedback)</div>
+              <div class="admin-card__value" id="mSat">—</div>
+              <div class="admin-card__hint" id="mSatHint"></div>
+            </div>
+            <div class="admin-card" style="display:none;">
+              <div class="admin-card__label">Handoff Rate</div>
+              <div class="admin-card__value" id="mHandoff">—</div>
+              <div class="admin-card__hint" id="mHandoffHint"></div>
+            </div>
+          </div>
+
+          <div class="admin-grid">
+            <section class="admin-panel" style="grid-column: span 2;">
+              <div class="admin-panel__header">
+                <h3>Logs Truy Vấn CV</h3>
+                <div class="admin-panel__tools">
+                  <input id="qSearch" class="admin-input admin-input--sm" placeholder="Tìm kiếm..." />
+                  <select id="routeFilter" class="admin-input admin-input--sm">
+                    <option value="">route: all</option>
+                    <option value="cv_search">cv_search</option>
+                    <option value="skills_analytics">skills_analytics</option>
+                    <option value="general_chat">general_chat</option>
+                    <option value="out_of_domain">out_of_domain</option>
+                  </select>
+                  <select id="statusFilter" class="admin-input admin-input--sm">
+                    <option value="">status: all</option>
+                    <option value="SUCCESS">SUCCESS</option>
+                    <option value="ERROR">ERROR</option>
+                  </select>
+                  <button id="btnLoadLogs" class="btn btn--ghost admin-btn--sm">Load</button>
+                </div>
+              </div>
+
+              <div class="admin-table-wrap">
+                <table class="admin-table" id="logsTable">
+                  <thead>
+                    <tr>
+                      <th>Time</th>
+                      <th>Route</th>
+                      <th>Status</th>
+                      <th>ms</th>
+                      <th>Sources</th>
+                      <th>Question</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="admin-panel">
+              <div class="admin-panel__header">
+                <h3>Handoffs</h3>
+                <div class="admin-panel__tools">
+                  <select id="handoffStatus" class="admin-input admin-input--sm">
+                    <option value="">status: all</option>
+                    <option value="new">new</option>
+                    <option value="contacted">contacted</option>
+                    <option value="closed">closed</option>
+                  </select>
+                  <button id="btnLoadHandoffs" class="btn btn--ghost admin-btn--sm">Load</button>
+                </div>
+              </div>
+              <div class="admin-table-wrap">
+                <table class="admin-table" id="handoffTable">
+                  <thead>
+                    <tr>
+                      <th>Time</th>
+                      <th>Status</th>
+                      <th>Phone</th>
+                      <th>Message</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/admin.js"></script>
+  </body>
+</html>
+

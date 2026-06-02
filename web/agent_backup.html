@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agent Chat – Viet RAG2</title>
+    <meta name="description" content="Giao diện chat nhanh với Agent (WebSocket streaming) cho Viet RAG2." />
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/agent.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/agent" class="logo">AGENT<span class="logo__dot">•</span>CHAT</a>
+        <nav class="nav">
+          <ul class="nav__list">
+            <li><a href="/static/frontend_test.html#demo" class="nav__link">Landing Demo</a></li>
+            <li><a href="/owner" class="nav__link">Owner</a></li>
+            <li><a href="/admin" class="nav__link">Admin</a></li>
+          </ul>
+          <button id="btnClear" class="btn btn--ghost" type="button">Clear</button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="section section--dark">
+        <div class="container">
+          <div class="section__header section__header--center">
+            <div class="section__eyebrow">Live</div>
+            <h2>Chat với Agent (streaming)</h2>
+            <p>Gửi câu hỏi qua WebSocket `ws://.../ws/query`, nhận câu trả lời theo chunk giống ChatGPT.</p>
+          </div>
+
+          <div class="demo-layout">
+            <div class="demo-panel">
+              <div class="demo-panel__header">
+                <span style="font-size: 0.85rem; color: #9ca3af;">Cấu hình</span>
+                <span id="statusLabel" class="demo-panel__status-label status-idle">Sẵn sàng</span>
+              </div>
+              <form class="demo-form" onsubmit="return false;">
+                <div class="form-group">
+                  <label for="tenantId">Tenant ID</label>
+                  <input id="tenantId" type="text" placeholder="vd: brightpathacademy" value="brightpathacademy" />
+                </div>
+                <div class="form-group">
+                  <label for="branchId">Branch ID (tuỳ chọn)</label>
+                  <input id="branchId" type="text" placeholder="vd: cs1" value="" />
+                </div>
+                <div class="form-group">
+                  <label for="userId">User ID (tuỳ chọn)</label>
+                  <input id="userId" type="text" placeholder="vd: web:demo01" value="" />
+                </div>
+                <div class="form-group">
+                  <label for="sessionId">Session ID (memory)</label>
+                  <input id="sessionId" type="text" placeholder="vd: brightpathacademy:web:abc123" value="" />
+                  <div class="demo-hint">
+                    Nếu để trống, hệ thống tự tạo 1 session theo tenant và lưu trong trình duyệt.
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="userQuestion">Câu hỏi</label>
+                  <textarea id="userQuestion" placeholder="vd: Trung tâm có những chương trình nào?"></textarea>
+                </div>
+                <button id="btnAsk" class="btn btn--primary">Gửi</button>
+              </form>
+            </div>
+
+            <div class="demo-panel">
+              <div class="demo-panel__header">
+                <span style="font-size: 0.85rem; color: #9ca3af;">Trả lời</span>
+                <span id="metaLine" class="demo-meta-line"></span>
+              </div>
+              <div id="answerContainer" class="demo-output">
+                <p class="demo-output__placeholder">Câu trả lời sẽ xuất hiện tại đây…</p>
+              </div>
+              <div id="sourcesContainer" class="demo-sources"></div>
+              <div class="demo-feedback">
+                <button id="btnUp" class="demo-feedback__btn" type="button">👍 Hài lòng</button>
+                <button id="btnDown" class="demo-feedback__btn" type="button">👎 Chưa hài lòng</button>
+                <span id="feedbackStatus" class="demo-feedback__status"></span>
+              </div>
+              <div class="demo-hint">
+                Tip: nếu backend bật analytics, bạn sẽ thấy trace trong `/admin` và `/owner`.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/agent.js"></script>
+  </body>
+</html>
+
