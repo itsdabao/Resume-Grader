@@ -20,32 +20,41 @@ logger = logging.getLogger(__name__)
 # PDF extraction
 # ---------------------------------------------------------------------------
 
-def extract_text_from_pdf(file_bytes: bytes) -> str:
-    """
-    Extract text from PDF bytes using pdfplumber (pure-python, no external deps).
-    Falls back to pymupdf if pdfplumber unavailable, then to raw binary decode.
-    """
-    text = ""
-
-    # Strategy 1: pdfplumber (preferred — excellent table/layout handling)
+def _is_scanned_pdf(file_bytes: bytes) -> bool:
+    """Quick heuristic: check if a PDF is mostly scanned images (very little extractable text)."""
     try:
         import pdfplumber
-
         with pdfplumber.open(io.BytesIO(file_bytes)) as pdf:
-            pages = []
+            if not pdf.pages:
+                return True
+            total_chars = 0
             for page in pdf.pages:
                 page_text = page.extract_text() or ""
-                pages.append(page_text)
-            text = "\n\n".join(pages)
-    except ImportError:
-        logger.warning("pdfplumber not installed, trying pymupdf fallback")
-    except Exception as e:
-        logger.warning("pdfplumber failed: %s, trying fallback", e)
+                total_chars += len(page_text.strip())
+            avg_chars = total_chars / len(pdf.pages)
+            # Less than 50 chars per page on average = likely scanned
+            return avg_chars < 50
+    except Exception:
+        return False
 
-    if text.strip():
-        return _clean_text(text)
 
-    # Strategy 2: pymupdf (fitz)
+def extract_text_from_pdf(file_bytes: bytes) -> str:
+    """
+    Extract text from PDF bytes. Tries multiple strategies and picks the best result.
+    For scanned PDFs, uses Gemini Vision OCR.
+    """
+    # Early detection: if PDF is scanned, skip directly to Vision OCR
+    if _is_scanned_pdf(file_bytes):
+        logger.info("Detected scanned PDF — skipping text extraction, going to Vision OCR.")
+        vision_text = _extract_text_from_pdf_vision(file_bytes)
+        if vision_text.strip():
+            return _clean_text(vision_text)
+        # If Vision OCR also fails, continue with normal strategies anyway
+
+    fitz_text = ""
+    plumber_text = ""
+
+    # Strategy 1: pymupdf (fitz) — better word spacing for most CVs
     try:
         import fitz  # pymupdf
 
@@ -54,11 +63,34 @@ def extract_text_from_pdf(file_bytes: bytes) -> str:
         for page in doc:
             pages.append(page.get_text())
         doc.close()
-        text = "\n\n".join(pages)
+        fitz_text = "\n\n".join(pages)
     except ImportError:
-        logger.warning("pymupdf not installed")
+        logger.debug("pymupdf not installed")
     except Exception as e:
         logger.warning("pymupdf failed: %s", e)
+
+    # Strategy 2: pdfplumber (excellent table/layout handling)
+    try:
+        import pdfplumber
+
+        with pdfplumber.open(io.BytesIO(file_bytes)) as pdf:
+            pages = []
+            for page in pdf.pages:
+                page_text = page.extract_text() or ""
+                pages.append(page_text)
+            plumber_text = "\n\n".join(pages)
+    except ImportError:
+        logger.debug("pdfplumber not installed")
+    except Exception as e:
+        logger.warning("pdfplumber failed: %s", e)
+
+    # Pick the best result: prefer fitz (better word spacing) when available
+    # Use pdfplumber only if fitz failed or produced less content
+    text = ""
+    if fitz_text.strip() and len(fitz_text.strip()) > 100:
+        text = fitz_text
+    elif plumber_text.strip():
+        text = plumber_text
 
     if text.strip() and len(text.strip()) > 100:
         return _clean_text(text)
@@ -86,6 +118,7 @@ def extract_text_from_pdf(file_bytes: bytes) -> str:
 def _extract_text_from_pdf_vision(file_bytes: bytes) -> str:
     """
     Convert PDF pages to images and use Google Gemini Vision API to OCR the text.
+    Handles up to 10 pages. Supports Vietnamese and English documents.
     """
     import base64
     import os
@@ -99,16 +132,26 @@ def _extract_text_from_pdf_vision(file_bytes: bytes) -> str:
     # We will use the model specified in .env or fallback to a known model
     model_name = os.getenv("GEMINI_VISION_MODEL", "gemini-3.5-flash")
 
+    OCR_PROMPT = (
+        "You are an OCR system. Extract ALL text from this document image. "
+        "The document may be in Vietnamese or English. "
+        "Output only the extracted text, preserving its structure: "
+        "headings, bullet points, tables, and all diacritical marks (dấu tiếng Việt). "
+        "Do not add conversational text, commentary, or interpretation. "
+        "Do not skip any sections."
+    )
+
     try:
         import fitz
         doc = fitz.open(stream=file_bytes, filetype="pdf")
         pages_text = []
 
-        # Process at most 3 pages to avoid long delays
-        for page_idx in range(min(3, len(doc))):
+        # Process up to 10 pages
+        max_pages = min(10, len(doc))
+        for page_idx in range(max_pages):
             page = doc[page_idx]
-            # Zoom x2 for better resolution
-            pix = page.get_pixmap(matrix=fitz.Matrix(2, 2))
+            # Zoom x3 for better resolution (important for small text & Vietnamese diacritics)
+            pix = page.get_pixmap(matrix=fitz.Matrix(3, 3))
             img_bytes = pix.tobytes("png")
             b64_img = base64.b64encode(img_bytes).decode("utf-8")
 
@@ -116,7 +159,7 @@ def _extract_text_from_pdf_vision(file_bytes: bytes) -> str:
                 "contents": [
                     {
                         "parts": [
-                            {"text": "You are an OCR system. Extract all text from this resume image. Output only the extracted text, keeping its structure. Do not add conversational text."},
+                            {"text": OCR_PROMPT},
                             {
                                 "inline_data": {
                                     "mime_type": "image/png",
@@ -128,22 +171,26 @@ def _extract_text_from_pdf_vision(file_bytes: bytes) -> str:
                 ],
                 "generationConfig": {
                     "temperature": 0.0,
-                    "maxOutputTokens": 4096
+                    "maxOutputTokens": 8192
                 }
             }
 
             url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
-            resp = requests.post(url, json=payload, timeout=60)
-            if resp.status_code != 200:
-                logger.error(f"Gemini API Error: {resp.text}")
-            resp.raise_for_status()
-            
-            data = resp.json()
             try:
+                resp = requests.post(url, json=payload, timeout=90)
+                if resp.status_code != 200:
+                    logger.error(f"Gemini API Error on page {page_idx+1}: {resp.text[:300]}")
+                    continue
+                
+                data = resp.json()
                 extracted = data["candidates"][0]["content"]["parts"][0]["text"]
                 pages_text.append(extracted)
             except (KeyError, IndexError):
-                logger.error(f"Unexpected Gemini response format: {data}")
+                logger.error(f"Unexpected Gemini response format on page {page_idx+1}")
+            except requests.exceptions.Timeout:
+                logger.warning(f"Vision OCR timeout on page {page_idx+1}, skipping")
+            except Exception as e:
+                logger.error(f"Vision OCR error on page {page_idx+1}: {e}")
 
         doc.close()
         return "\n\n".join(pages_text)
@@ -258,9 +305,21 @@ def _extract_via_llamaindex(file_bytes: bytes, *, suffix: str) -> str:
 
 
 def _clean_text(text: str) -> str:
-    """Normalize whitespace, remove excessive blank lines, strip control chars."""
+    """Normalize whitespace, remove CID references, fix merged words, strip control chars."""
     # Remove null bytes and control chars (except newline/tab)
     text = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", "", text)
+    # Remove PDF CID references like (cid:131), (cid:239) — common in fonts with custom encoding
+    text = re.sub(r"\(cid:\d+\)", "", text)
+    # Fix words merged by PDF kerning: insert space between lowercase+Uppercase transitions
+    # e.g. "reducingunnecessary" → "reducing unnecessary"
+    # Only apply to sequences of 15+ chars without spaces (likely merged words)
+    def _fix_merged(match: re.Match) -> str:
+        word = match.group(0)
+        if len(word) >= 15:
+            # Insert space before uppercase letters that follow lowercase
+            return re.sub(r"([a-z])([A-Z])", r"\1 \2", word)
+        return word
+    text = re.sub(r"[A-Za-z]{15,}", _fix_merged, text)
     # Collapse 3+ consecutive newlines to 2
     text = re.sub(r"\n{3,}", "\n\n", text)
     # Strip trailing whitespace per line

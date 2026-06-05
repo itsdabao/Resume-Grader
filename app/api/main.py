@@ -5,7 +5,7 @@ import time
 import threading
 from typing import Any, Dict, List, Optional, cast
 
-from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile, WebSocket, WebSocketDisconnect, status
+from fastapi import Depends, FastAPI, File, Form, HTTPException, Request, UploadFile, WebSocket, WebSocketDisconnect, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse, RedirectResponse, Response
 from fastapi.security import HTTPAuthorizationCredentials
@@ -747,7 +747,7 @@ def _validate_cv_upload(files: List[UploadFile]) -> None:
 async def cv_upload(
     request: Request,
     files: List[UploadFile] = File(...),
-    job_description: Optional[str] = None,
+    job_description: Optional[str] = Form(None),
 ) -> JSONResponse:
     """
     Upload CV files (PDF/DOCX/TXT) for batch scoring.

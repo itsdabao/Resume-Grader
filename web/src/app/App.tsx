@@ -73,8 +73,7 @@ export default function App() {
     [candidates, selectedId],
   );
 
-  const hasJobDescription =
-    jobDescription.text.trim().length > 0 || Boolean(jobDescription.fileName);
+  const hasJobDescription = jobDescription.text.trim().length > 0;
 
   // ---------------------------------------------------------------------------
   // Commentary & CV: prefer backend review cache, then static data, then fallback
@@ -127,7 +126,7 @@ export default function App() {
         reasoning: backendReasoning
           ? backendReasoning
           : hasJobDescription
-            ? `${commentary.reasoning} JD match layer is active: the ranking is now framed against the supplied job description${jobDescription.fileName ? ` (${jobDescription.fileName})` : ""}, prioritizing must-have skills, seniority, responsibilities, and measurable outcomes.`
+            ? `${commentary.reasoning} JD match layer is active: the ranking is now framed against the supplied job description, prioritizing must-have skills, seniority, responsibilities, and measurable outcomes.`
             : commentary.reasoning,
       }
     : null;
@@ -223,7 +222,6 @@ export default function App() {
     selected,
     cv,
     jobDescription.text,
-    jobDescription.fileName,
     publicConfig?.public_query_enabled,
     reviewCache,
   ]);
@@ -235,7 +233,7 @@ export default function App() {
   const handleUpload = useCallback(
     async (files: File[]) => {
       // Must have JD
-      if (!jobDescription.text.trim() && !jobDescription.fileName) {
+      if (!jobDescription.text.trim()) {
         alert("Vui lòng nhập Job Description trước khi chấm điểm CV!");
         return;
       }
